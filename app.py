@@ -17,7 +17,7 @@ with st.sidebar:
 
     st.markdown("---")
     st.markdown("### Manual Commands")
-    st.code("/launch\n/open\n/goto <url>\n/close\n/save <filename.py>\n/shutdown")
+    st.code("/launch\n/open\n/goto <url>\n/get_page_contents\n/close\n/save <filename.py>\n/shutdown")
     st.markdown("Or, just talk to the bot in natural language!")
 
 # --- Initialization ---
@@ -89,11 +89,16 @@ def parse_and_execute(llm_output: str, original_prompt: str):
             elif command_part == "open":
                 return controller.open_browser()
             elif command_part == "goto":
+                print(f"DEBUG: Navigating to URL: {args_part}")
                 return controller.goto(args_part) if args_part else "Please provide a URL."
             elif command_part == "close":
                 return controller.close_browser()
             elif command_part == "save":
                 return controller.save_script(args_part) if args_part else "Please provide a filename."
+            elif command_part == "get_page_contents":
+                return controller.get_page_contents()
+            elif command_part == "summarize_page":
+                return controller.summarize_page()
             elif command_part == "shutdown":
                 res = controller.shutdown()
                 st.session_state.messages = [{"role": "assistant", "content": "Session has been shut down. Reload the page to start over."}]
