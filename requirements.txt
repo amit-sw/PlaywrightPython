@@ -2,3 +2,4 @@ streamlit
 langchain
 openai
 playwright
+langchain_openai
